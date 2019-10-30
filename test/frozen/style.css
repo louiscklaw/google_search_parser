@@ -1,0 +1,20 @@
+/*
+input[aria-label="Search"]{
+  background-color:yellow
+} */
+
+div#search .g a:nth-of-type(1){
+  color: red
+}
+
+input[type="submit"][value~="Google"]{
+  background: white
+}
+
+div#search {
+  background: yellow
+}
+
+.gb_e {
+    background-color:green
+}
