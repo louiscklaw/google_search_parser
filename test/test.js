@@ -4,17 +4,20 @@ const fs = require("fs");
 const path = require("path");
 
 
-const google_search = require(`${__dirname}/../src/google_search.js`)
+const google = require(`${__dirname}/../src/google.js`)
 const common = require(`${__dirname}/../src/common.js`);
-const main = require(`${__dirname}/../src/main.js`);
+
+
+var test_search_url = 'http://127.0.0.1:46255/google/google_search_parser/test/frozen/test.html'
 
 function test_helloworld() {
   var search_result_html = common.loadHTML(
     `${__dirname}/frozen/search_result.html`
   );
-  google_search.parseSearchContent(search_result_html)
+
+  google.parseSearchContent(search_result_html)
     .then(res => {
-      fs.writeFileSync('./test.html', `<pre>${JSON.stringify(res)}</pre>`)
+      console.log(res)
     })
 
 }

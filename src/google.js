@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs");
 
 const puppeteer = require("puppeteer");
 var Xray = require("x-ray");
 var x = Xray({});
 
 var google_search_url = 'http://www.google.com'
-var test_search_url = 'http://127.0.0.1:46255/google/google_search_parser/test/frozen/test.html'
+
+async function parseSearchContent(page_raw) {
+  return x(page_raw,"body div.srg div.g", [{search_result: 'a@href'}]);
+}
+
 
 async function performSearch(pup_page_in, search_text){
 
@@ -38,28 +42,26 @@ async function getSearchResult(pup_page_in){
 
 }
 
-function main() {
-  (async () => {
-    const browser = await puppeteer.launch({
-      headless: false
-    });
-    const page = await browser.newPage();
-    await page.goto(google_search_url);
-
-    await performSearch(page, 'louiscklaw facebook')
-    var content = await getSearchResult(page)
-
-    await page.screenshot({ path: "example.png" });
-    await browser.close();
-
-    parseSearchContent(content)
-      .then(res => {
-        console.log(res)
-      })
-
-  })();
+async function getScreenShot(page_in, option_in){
+  return page_in.screenshot(option_in);
 }
 
+async function googleSearch(search_text){
 
+  const browser = await puppeteer.launch({
+    headless: false
+  });
+  const page = await browser.newPage();
+  await page.goto(google_search_url);
 
-// main();
+  await performSearch(page, search_text)
+  var content = await getSearchResult(page)
+
+  await getScreenShot(page, {path: './search_result.png', fullPage: true})
+  await browser.close();
+
+  return content
+}
+
+module.exports.parseSearchContent = parseSearchContent;
+module.exports.googleSearch = googleSearch;
