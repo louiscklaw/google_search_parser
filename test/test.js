@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 
-const google = require(`${__dirname}/../src/google.js`)
+const google = require(`${__dirname}/../index.js`)
 const common = require(`${__dirname}/../src/common.js`);
 
 
