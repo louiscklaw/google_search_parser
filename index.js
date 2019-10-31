@@ -49,7 +49,7 @@ async function getScreenShot(page_in, option_in){
 async function googleSearch(search_text){
 
   const browser = await puppeteer.launch({
-    headless: false
+    headless: true
   });
   const page = await browser.newPage();
   await page.goto(google_search_url);
