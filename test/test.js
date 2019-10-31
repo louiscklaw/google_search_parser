@@ -14,7 +14,7 @@ function test_helloworld() {
   );
   google_search.parseSearchContent(search_result_html)
     .then(res => {
-      console.log(res)
+      fs.writeFileSync('./test.html', `<pre>${JSON.stringify(res)}</pre>`)
     })
 
 }
